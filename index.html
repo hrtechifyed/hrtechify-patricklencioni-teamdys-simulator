@@ -1,1 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>HRTechify Team Simulator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
+<body class="bg-slate-100">
+
+<div class="max-w-4xl mx-auto p-6">
+
+<h1 class="text-4xl font-bold mb-6">
+HRTechify Team Simulator
+</h1>
+
+<div class="bg-white p-6 rounded-xl shadow">
+
+<label class="font-bold">
+Job Function
+</label>
+
+<select id="jobFunction"
+class="border p-2 w-full mt-2">
+
+<option>Human Resources</option>
+<option>Information Technology</option>
+<option>Sales</option>
+<option>Finance & Accounting</option>
+
+</select>
+
+<button
+onclick="startSimulation()"
+class="bg-blue-600 text-white px-4 py-2 rounded mt-4">
+
+Start Simulation
+
+</button>
+
+</div>
+
+<div
+id="simulation"
+class="hidden bg-white p-6 rounded-xl shadow mt-6">
+
+<h2 id="questionTitle"
+class="text-2xl font-bold mb-4">
+
+Question
+
+</h2>
+
+<p id="questionText">
+
+Question will appear here.
+
+</p>
+
+<div class="mt-6">
+
+<button
+onclick="nextQuestion()"
+class="bg-green-600 text-white px-4 py-2 rounded">
+
+Next
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let currentQuestion = 0;
+
+const questions = [
+
+"Trust: A team member admits a mistake. What happens next?",
+
+"Conflict: Team members disagree on priorities. What happens next?",
+
+"Commitment: The team must make a decision. What happens next?",
+
+"Accountability: A deadline is missed. What happens next?",
+
+"Results: Leadership increases pressure. What happens next?"
+
+];
+
+function startSimulation(){
+
+document
+.getElementById("simulation")
+.classList
+.remove("hidden");
+
+loadQuestion();
+
+}
+
+function loadQuestion(){
+
+document
+.getElementById("questionTitle")
+.innerText =
+"Question " + (currentQuestion + 1);
+
+document
+.getElementById("questionText")
+.innerText =
+questions[currentQuestion];
+
+}
+
+function nextQuestion(){
+
+currentQuestion++;
+
+if(currentQuestion >= questions.length){
+
+alert("Simulation Complete");
+
+return;
+
+}
+
+loadQuestion();
+
+}
+
+</script>
+
+</body>
+</html>
