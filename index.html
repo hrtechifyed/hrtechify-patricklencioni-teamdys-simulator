@@ -1,35 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html>
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>HRTechify Team Simulator</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
-<style>
-
-body{
-background:#f8fafc;
-font-family:Arial,sans-serif;
-}
-
-.hero-card{
-background:white;
-border-radius:20px;
-box-shadow:0 10px 25px rgba(0,0,0,.08);
-}
-
-.carousel-image{
-height:280px;
-object-fit:cover;
-width:100%;
-border-radius:16px;
-}
-
-</style>
+<link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -39,64 +18,52 @@ border-radius:16px;
 
 <div class="text-center mb-8">
 
-<h1 class="text-5xl font-bold text-white">
+<h1 class="text-5xl font-bold">
 HRTechify Team Simulator
 </h1>
 
 <p class="text-slate-300 mt-3">
-Patrick Lencioni Leadership & Team Effectiveness Assessment
+Leadership & Team Effectiveness Assessment
 </p>
 
 </div>
 
-<div class="hero-card p-4 mb-8">
+<div id="landingPage">
+
+<div class="hero-card p-4 mb-8 max-w-5xl mx-auto">
 
 <img
 id="carousel"
 class="carousel-image"
-src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200"
-alt="Leadership">
+src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200">
 
 </div>
 
-<div class="hero-card p-8">
+<div class="hero-card p-8 max-w-4xl mx-auto">
 
 <h2 class="text-2xl font-bold mb-6">
 Participant Information
 </h2>
 
-<div class="grid md:grid-cols-2 gap-4">
-
 <input
 id="name"
 placeholder="Full Name"
-class="border p-3 rounded text-black">
-
-</div>
-
-<div class="mt-6">
-
-<label class="font-semibold">
-Job Function
-</label>
+class="border p-3 rounded w-full mb-4">
 
 <select
 id="jobFunction"
-class="border p-3 rounded w-full mt-2 text-black"
-onchange="populateFamilies()">
+onchange="populateFamilies()"
+class="border p-3 rounded w-full mb-4">
 
-<option value="">Select Job Function</option>
+<option value="">
+Select Job Function
+</option>
 
 </select>
-<div class="mt-6">
-
-<label class="font-semibold">
-Job Family
-</label>
 
 <select
 id="jobFamily"
-class="border p-3 rounded w-full mt-2">
+class="border p-3 rounded w-full">
 
 <option value="">
 Select Job Family
@@ -104,13 +71,9 @@ Select Job Family
 
 </select>
 
-</div>
-  
-</div>
-
 <button
 onclick="startSimulation()"
-class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg mt-6">
+class="bg-blue-600 text-white px-6 py-3 rounded-lg mt-6">
 
 Begin Assessment
 
@@ -118,23 +81,11 @@ Begin Assessment
 
 </div>
 
+</div>
+
 <div
 id="simulation"
-class="hidden hero-card p-10 mt-4 min-h-screen max-w-5xl mx-auto">
-
-<div class="mb-4">
-
-<div class="w-full bg-gray-200 rounded-full h-4">
-
-<div
-id="progressBar"
-class="bg-blue-600 h-4 rounded-full"
-style="width:0%">
-</div>
-
-</div>
-
-</div>
+class="hidden hero-card p-10 mt-6">
 
 <h2
 id="questionTitle"
@@ -146,596 +97,28 @@ id="questionText"
 class="text-lg mb-6">
 </p>
 
-<div class="grid gap-3">
-
 <button
-onclick="answer('positive')"
-class="bg-green-600 text-white p-3 rounded">
+onclick="answer()"
+class="bg-green-600 px-5 py-3 rounded">
 
-Positive Team Behaviour
+Next
 
 </button>
-
-<button
-onclick="answer('neutral')"
-class="bg-yellow-500 text-white p-3 rounded">
-
-Neutral Team Behaviour
-
-</button>
-
-<button
-onclick="answer('negative')"
-class="bg-red-600 text-white p-3 rounded">
-
-Negative Team Behaviour
-
-</button>
-
-</div>
 
 </div>
 
 </div>
 
 <footer
-class="fixed bottom-0 left-0 right-0 bg-slate-900 text-white p-3 text-center">
+class="fixed bottom-0 left-0 right-0 bg-black text-white text-center p-3">
 
-HRTechify Team Simulator |
-Question <span id="tracker">0</span>/15
+Scenario <span id="tracker">0</span>/15
 
 </footer>
 
-<script>
+<script src="data/job-functions.js"></script>
 
-let currentQuestion = 0;
-
-function assignArc(){
-
-let lastArc =
-localStorage.getItem("lastArc");
-
-let currentArc;
-
-if(!lastArc){
-
-currentArc =
-Math.random() < 0.5
-? "ArcA"
-: "ArcB";
-
-}
-else{
-
-currentArc =
-lastArc === "ArcA"
-? "ArcB"
-: "ArcA";
-
-}
-
-localStorage.setItem(
-"lastArc",
-currentArc
-);
-
-return currentArc;
-
-}
-const jobFunctions = {
-
-"Human Resources":[
-"HR Business Partner",
-"Talent Acquisition",
-"Learning & Development",
-"Compensation & Benefits",
-"Employee Relations",
-"People Analytics",
-"HR Operations",
-"Others"
-],
-
-"Finance & Accounting":[
-"Accounting",
-"FP&A",
-"Treasury",
-"Audit",
-"Taxation",
-"Payroll",
-"Others"
-],
-
-"Information Technology":[
-"Software Engineering",
-"Cloud Engineering",
-"DevOps",
-"Infrastructure",
-"IT Support",
-"Enterprise Applications",
-"Architecture",
-"Others"
-],
-
-"Engineering":[
-"Mechanical",
-"Civil",
-"Electrical",
-"Manufacturing",
-"Industrial",
-"Others"
-],
-
-"Product Management":[
-"Product Manager",
-"Product Owner",
-"Growth Product",
-"Platform Product",
-"Others"
-],
-
-"Project & Program Management":[
-"Project Manager",
-"Program Manager",
-"PMO",
-"Agile Coach",
-"Others"
-],
-
-"Sales":[
-"Enterprise Sales",
-"Inside Sales",
-"Account Management",
-"Business Development",
-"Channel Sales",
-"Others"
-],
-
-"Marketing":[
-"Brand Marketing",
-"Digital Marketing",
-"Growth Marketing",
-"Performance Marketing",
-"Content Marketing",
-"Others"
-],
-
-"Customer Service & Support":[
-"Customer Success",
-"Technical Support",
-"Service Operations",
-"Others"
-],
-
-"Operations":[
-"Operations Excellence",
-"Business Operations",
-"Shared Services",
-"Others"
-],
-
-"Supply Chain & Logistics":[
-"Procurement",
-"Warehousing",
-"Inventory",
-"Transportation",
-"Others"
-],
-
-"Manufacturing & Production":[
-"Production",
-"Plant Operations",
-"Assembly",
-"Others"
-],
-
-"Quality Assurance":[
-"QA Engineer",
-"Test Manager",
-"Quality Analyst",
-"Others"
-],
-
-"Data & Analytics":[
-"Data Analyst",
-"BI Analyst",
-"Data Engineer",
-"Others"
-],
-
-"Artificial Intelligence & Machine Learning":[
-"AI Engineer",
-"ML Engineer",
-"AI Research",
-"Prompt Engineering",
-"Others"
-],
-
-"Cybersecurity":[
-"SOC Analyst",
-"Security Engineer",
-"Cyber Risk",
-"Others"
-],
-
-"Legal & Compliance":[
-"Legal Counsel",
-"Compliance Officer",
-"Contract Management",
-"Others"
-],
-
-"Risk Management":[
-"Enterprise Risk",
-"Operational Risk",
-"Business Continuity",
-"Others"
-],
-
-"Procurement & Sourcing":[
-"Strategic Sourcing",
-"Category Management",
-"Vendor Management",
-"Others"
-],
-
-"Administration":[
-"Executive Assistant",
-"Office Administration",
-"Facilities Administration",
-"Others"
-],
-
-"Research & Development":[
-"Research Scientist",
-"Innovation",
-"Product Research",
-"Others"
-],
-
-"Consulting":[
-"Management Consulting",
-"Strategy Consulting",
-"Technology Consulting",
-"Others"
-],
-
-"Strategy & Corporate Development":[
-"Corporate Strategy",
-"M&A",
-"Business Transformation",
-"Others"
-],
-
-"Healthcare & Medical":[
-"Doctor",
-"Nurse",
-"Healthcare Operations",
-"Others"
-],
-
-"Education & Training":[
-"Teacher",
-"Trainer",
-"Instructional Design",
-"Others"
-],
-
-"Design & Creative":[
-"UX Design",
-"UI Design",
-"Graphic Design",
-"Others"
-],
-
-"Communications & PR":[
-"Corporate Communications",
-"Public Relations",
-"Internal Communications",
-"Others"
-],
-
-"Content & Editorial":[
-"Content Writer",
-"Technical Writer",
-"Editor",
-"Others"
-],
-
-"Media & Entertainment":[
-"Production",
-"Editing",
-"Animation",
-"Others"
-],
-
-"Real Estate & Facilities":[
-"Facilities Management",
-"Property Management",
-"Others"
-],
-
-"Construction":[
-"Site Engineering",
-"Construction Management",
-"Others"
-],
-
-"Environmental Health & Safety":[
-"EHS",
-"Safety Management",
-"Others"
-],
-
-"Government & Public Policy":[
-"Policy Analysis",
-"Government Relations",
-"Others"
-],
-
-"Non-Profit & Social Impact":[
-"Fundraising",
-"Program Management",
-"Others"
-],
-
-"Retail":[
-"Store Management",
-"Merchandising",
-"Retail Operations",
-"Others"
-],
-
-"Hospitality & Tourism":[
-"Hotel Operations",
-"Travel Services",
-"Guest Experience",
-"Others"
-],
-
-"Banking & Financial Services":[
-"Relationship Management",
-"Credit Analysis",
-"Retail Banking",
-"Others"
-],
-
-"Insurance":[
-"Underwriting",
-"Claims",
-"Actuarial",
-"Others"
-],
-
-"Telecommunications":[
-"Network Engineering",
-"Telecom Operations",
-"Others"
-],
-
-"Aerospace & Defense":[
-"Aerospace Engineering",
-"Defense Programs",
-"Others"
-],
-
-"Others":[
-"Others"
-]
-
-};
-function populateFamilies(){
-
-const functionName =
-document.getElementById("jobFunction").value;
-
-const familyDropdown =
-document.getElementById("jobFamily");
-
-familyDropdown.innerHTML =
-'<option value="">Select Job Family</option>';
-
-if(!functionName) return;
-
-jobFunctions[functionName].forEach(family => {
-
-const option =
-document.createElement("option");
-
-option.value = family;
-
-option.textContent = family;
-
-familyDropdown.appendChild(option);
-
-});
-
-} 
-window.onload = function(){
-
-const functionDropdown =
-document.getElementById("jobFunction");
-
-Object.keys(jobFunctions).forEach(jobFunction => {
-
-const option =
-document.createElement("option");
-
-option.value = jobFunction;
-
-option.textContent = jobFunction;
-
-functionDropdown.appendChild(option);
-
-});
-
-};  
-const images = [
-
-"https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200",
-
-"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200",
-
-"https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200",
-
-"https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200"
-
-];
-
-let imageIndex = 0;
-
-setInterval(() => {
-
-imageIndex++;
-
-if(imageIndex >= images.length){
-
-imageIndex = 0;
-
-}
-
-document.getElementById("carousel").src =
-images[imageIndex];
-
-},3000);
-
-const questions = [
-
-"Trust: A team member admits a major mistake that has impacted the project timeline. How does the team respond?",
-
-"Conflict: Two senior members disagree strongly on priorities. What happens next?",
-
-"Trust: A stakeholder questions the team's capability. How does the team react?",
-
-"Commitment: A difficult decision must be made before tomorrow. What happens?",
-
-"Conflict: Tension rises during planning discussions. How is it handled?",
-
-"Accountability: A key deliverable is missed. What happens next?",
-
-"Trust: A team member asks for help publicly. How does the team respond?",
-
-"Commitment: Leadership wants a final decision. What happens?",
-
-"Results: Performance metrics are declining. What becomes the priority?",
-
-"Conflict: Resource allocation becomes a major issue. What happens?",
-
-"Accountability: One member repeatedly misses expectations. What happens?",
-
-"Results: Team goals and personal goals begin to diverge. What happens?",
-
-"Trust: Feedback is requested from peers. How is it received?",
-
-"Commitment: An unpopular but necessary change is proposed. What happens?",
-
-"Results: Final project outcomes are reviewed. What matters most?"
-
-];
-
-function startSimulation(){
-
-const fullName =
-document
-.getElementById("name")
-.value
-.trim();
-
-const regex =
-/^[A-Za-z]+(?:\s+[A-Za-z]+)+$/;
-
-if(!regex.test(fullName)){
-
-alert(
-"Please enter your first and last name."
-);
-
-return;
-
-}
-
-const assignedArc =
-assignArc();
-
-console.log(
-"Assigned Arc:",
-assignedArc
-);
-
-document
-.getElementById("landingPage")
-.style.display =
-"none";
-
-document
-.getElementById("simulation")
-.classList
-.remove("hidden");
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-currentQuestion = 0;
-
-loadQuestion();
-
-}
-
-currentQuestion = 0;
-
-document
-.getElementById("simulation")
-.classList
-.remove("hidden");
-
-loadQuestion();
-
-}
-
-function loadQuestion(){
-
-document
-.getElementById("questionTitle")
-.innerText =
-"Scenario " + (currentQuestion + 1);
-
-document
-.getElementById("questionText")
-.innerText =
-questions[currentQuestion];
-
-document
-.getElementById("tracker")
-.innerText =
-currentQuestion + 1;
-
-document
-.getElementById("progressBar")
-.style.width =
-((currentQuestion + 1) / 15 * 100) + "%";
-
-}
-
-function answer(type){
-
-currentQuestion++;
-
-if(currentQuestion >= questions.length){
-
-alert(
-"Assessment Completed."
-);
-
-return;
-
-}
-
-loadQuestion();
-
-}
-
-</script>
+<script src="js/app.js"></script>
 
 </body>
 </html>
