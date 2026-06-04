@@ -21,12 +21,49 @@ Job Function
 </label>
 
 <select id="jobFunction"
-class="border p-2 w-full mt-2">
+class="border p-2 w-full mt-2"
+onchange="populateFamilies()">
+
+<option value="">
+Select Function
+</option>
 
 <option>Human Resources</option>
 <option>Information Technology</option>
 <option>Sales</option>
 <option>Finance & Accounting</option>
+
+</select>
+
+<label class="font-bold mt-4 block">
+Job Family
+</label>
+
+<select
+id="jobFamily"
+class="border p-2 w-full mt-2">
+
+<option>
+Select Family
+</option>
+
+</select>
+
+<label class="font-bold mt-4 block">
+Simulation Arc
+</label>
+
+<select
+id="arc"
+class="border p-2 w-full mt-2">
+
+<option value="ArcA">
+Arc A - Crisis Simulation
+</option>
+
+<option value="ArcB">
+Arc B - Transformation Program
+</option>
 
 </select>
 
@@ -76,6 +113,58 @@ Next
 <script>
 
 let currentQuestion = 0;
+const families = {
+
+"Human Resources":[
+"Talent Acquisition",
+"HRBP",
+"Learning & Development",
+"Compensation & Benefits"
+],
+
+"Information Technology":[
+"Software Engineering",
+"Cloud",
+"DevOps",
+"IT Support"
+],
+
+"Sales":[
+"Enterprise Sales",
+"Inside Sales",
+"Account Management"
+],
+
+"Finance & Accounting":[
+"FP&A",
+"Accounting",
+"Treasury"
+]
+
+};
+
+function populateFamilies(){
+
+const func =
+document.getElementById("jobFunction").value;
+
+const familyDropdown =
+document.getElementById("jobFamily");
+
+familyDropdown.innerHTML = "";
+
+families[func].forEach(f=>{
+
+const option =
+document.createElement("option");
+
+option.text = f;
+
+familyDropdown.add(option);
+
+});
+
+}  
 
 const questions = [
 
@@ -92,6 +181,19 @@ const questions = [
 ];
 
 function startSimulation(){
+
+const func =
+document.getElementById("jobFunction").value;
+
+const family =
+document.getElementById("jobFamily").value;
+
+const arc =
+document.getElementById("arc").value;
+
+console.log(func);
+console.log(family);
+console.log(arc);
 
 document
 .getElementById("simulation")
