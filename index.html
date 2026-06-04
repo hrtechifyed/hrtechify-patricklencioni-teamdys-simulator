@@ -1,32 +1,104 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>HRTechify Team Simulator</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HRTechify Team Simulator</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+body{
+background:#f8fafc;
+}
+
+.hero-card{
+background:white;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.carousel-image{
+height:280px;
+object-fit:cover;
+width:100%;
+border-radius:16px;
+}
+
+</style>
+
 </head>
 
-<body class="bg-slate-100">
+<body>
 
-<div class="max-w-4xl mx-auto p-6">
+<div class="max-w-6xl mx-auto p-6">
 
-<h1 class="text-4xl font-bold mb-6">
+<div class="text-center mb-8">
+
+<h1 class="text-5xl font-bold text-slate-800">
 HRTechify Team Simulator
 </h1>
 
-<div class="bg-white p-6 rounded-xl shadow">
+<p class="text-slate-600 mt-3">
+Patrick Lencioni Framework Leadership & Team Effectiveness Assessment
+</p>
 
-<label class="font-bold">
+</div>
+
+<div class="hero-card p-4 mb-8">
+
+<img
+id="carousel"
+class="carousel-image"
+src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
+
+>
+
+</div>
+
+<div class="hero-card p-8">
+
+<h2 class="text-2xl font-bold mb-6">
+Participant Information
+</h2>
+
+<div class="grid md:grid-cols-2 gap-4">
+
+<input
+id="name"
+placeholder="Full Name"
+class="border p-3 rounded">
+
+<input
+id="email"
+placeholder="Email"
+class="border p-3 rounded">
+
+<input
+id="designation"
+placeholder="Designation"
+class="border p-3 rounded">
+
+<input
+id="organization"
+placeholder="Organization"
+class="border p-3 rounded">
+
+</div>
+
+<div class="mt-6">
+
+<label class="font-semibold">
 Job Function
 </label>
 
-<select id="jobFunction"
-class="border p-2 w-full mt-2"
-onchange="populateFamilies()">
-
-<option value="">
-Select Function
-</option>
+<select
+id="jobFunction"
+class="border p-3 rounded w-full mt-2">
 
 <option>Human Resources</option>
 <option>Information Technology</option>
@@ -35,30 +107,20 @@ Select Function
 
 </select>
 
-<label class="font-bold mt-4 block">
-Job Family
-</label>
+</div>
 
-<select
-id="jobFamily"
-class="border p-2 w-full mt-2">
+<div class="mt-4">
 
-<option>
-Select Family
-</option>
-
-</select>
-
-<label class="font-bold mt-4 block">
+<label class="font-semibold">
 Simulation Arc
 </label>
 
 <select
 id="arc"
-class="border p-2 w-full mt-2">
+class="border p-3 rounded w-full mt-2">
 
 <option value="ArcA">
-Arc A - Crisis Simulation
+Arc A - Critical Delivery Crisis
 </option>
 
 <option value="ArcB">
@@ -67,11 +129,13 @@ Arc B - Transformation Program
 
 </select>
 
+</div>
+
 <button
 onclick="startSimulation()"
-class="bg-blue-600 text-white px-4 py-2 rounded mt-4">
+class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg mt-6">
 
-Start Simulation
+Begin Assessment
 
 </button>
 
@@ -79,28 +143,57 @@ Start Simulation
 
 <div
 id="simulation"
-class="hidden bg-white p-6 rounded-xl shadow mt-6">
+class="hidden hero-card p-8 mt-8">
 
-<h2 id="questionTitle"
-class="text-2xl font-bold mb-4">
+<div class="mb-4">
 
-Question
+<div class="w-full bg-gray-200 rounded-full h-4">
+
+<div
+id="progressBar"
+class="bg-blue-600 h-4 rounded-full"
+style="width:0%">
+</div>
+
+</div>
+
+</div>
+
+<h2
+id="questionTitle"
+class="text-3xl font-bold mb-4">
 
 </h2>
 
-<p id="questionText">
-
-Question will appear here.
+<p
+id="questionText"
+class="text-lg mb-6">
 
 </p>
 
-<div class="mt-6">
+<div class="grid gap-3">
 
 <button
-onclick="nextQuestion()"
-class="bg-green-600 text-white px-4 py-2 rounded">
+onclick="answer('positive')"
+class="bg-green-600 text-white p-3 rounded">
 
-Next
+Positive Team Behaviour
+
+</button>
+
+<button
+onclick="answer('neutral')"
+class="bg-yellow-500 text-white p-3 rounded">
+
+Neutral Team Behaviour
+
+</button>
+
+<button
+onclick="answer('negative')"
+class="bg-red-600 text-white p-3 rounded">
+
+Negative Team Behaviour
 
 </button>
 
@@ -110,95 +203,87 @@ Next
 
 </div>
 
+<footer
+class="fixed bottom-0 left-0 right-0 bg-slate-900 text-white p-3 text-center">
+
+HRTechify Team Simulator |
+Question <span id="tracker">
+0 </span>
+/15
+
+</footer>
+
 <script>
 
-let currentQuestion = 0;
-const families = {
+let currentQuestion=0;
 
-"Human Resources":[
-"Talent Acquisition",
-"HRBP",
-"Learning & Development",
-"Compensation & Benefits"
-],
+const images=[
 
-"Information Technology":[
-"Software Engineering",
-"Cloud",
-"DevOps",
-"IT Support"
-],
+"https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
 
-"Sales":[
-"Enterprise Sales",
-"Inside Sales",
-"Account Management"
-],
+"https://images.unsplash.com/photo-1516321318423-f06f85e504b3",
 
-"Finance & Accounting":[
-"FP&A",
-"Accounting",
-"Treasury"
-]
+"https://images.unsplash.com/photo-1552664730-d307ca884978",
 
-};
+"https://images.unsplash.com/photo-1521737604893-d14cc237f11d"
 
-function populateFamilies(){
+];
 
-const func =
-document.getElementById("jobFunction").value;
+let imageIndex=0;
 
-const familyDropdown =
-document.getElementById("jobFamily");
+setInterval(()=>{
 
-familyDropdown.innerHTML = "";
+imageIndex++;
 
-families[func].forEach(f=>{
+if(imageIndex>=images.length){
 
-const option =
-document.createElement("option");
+imageIndex=0;
 
-option.text = f;
+}
 
-familyDropdown.add(option);
+document.getElementById("carousel").src=
+images[imageIndex];
 
-});
+},3000);
 
-}  
+const questions=[
 
-const questions = [
+"Trust: A team member admits a major mistake that has impacted the project timeline. How does the team respond?",
 
-"Trust: A team member admits a mistake. What happens next?",
+"Conflict: Two senior members disagree strongly on priorities. What happens next?",
 
-"Conflict: Team members disagree on priorities. What happens next?",
+"Trust: A stakeholder questions the team's capability. How does the team react?",
 
-"Commitment: The team must make a decision. What happens next?",
+"Commitment: A difficult decision must be made before tomorrow. What happens?",
 
-"Accountability: A deadline is missed. What happens next?",
+"Conflict: Tension rises during planning discussions. How is it handled?",
 
-"Results: Leadership increases pressure. What happens next?"
+"Accountability: A key deliverable is missed. What happens next?",
+
+"Trust: A team member asks for help publicly. How does the team respond?",
+
+"Commitment: Leadership wants a final decision. What happens?",
+
+"Results: Performance metrics are declining. What becomes the priority?",
+
+"Conflict: Resource allocation becomes a major issue. What happens?",
+
+"Accountability: One member repeatedly misses expectations. What happens?",
+
+"Results: Team goals and personal goals begin to diverge. What happens?",
+
+"Trust: Feedback is requested from peers. How is it received?",
+
+"Commitment: An unpopular but necessary change is proposed. What happens?",
+
+"Results: Final project outcomes are reviewed. What matters most?"
 
 ];
 
 function startSimulation(){
 
-const func =
-document.getElementById("jobFunction").value;
-
-const family =
-document.getElementById("jobFamily").value;
-
-const arc =
-document.getElementById("arc").value;
-
-console.log(func);
-console.log(family);
-console.log(arc);
-
-document
-.getElementById("simulation")
-.classList
-.remove("hidden");
+document.getElementById("simulation")
+.classList.remove("hidden");
 
 loadQuestion();
 
@@ -206,25 +291,31 @@ loadQuestion();
 
 function loadQuestion(){
 
-document
-.getElementById("questionTitle")
-.innerText =
-"Question " + (currentQuestion + 1);
+document.getElementById("questionTitle")
+.innerText=
+"Question "+(currentQuestion+1);
 
-document
-.getElementById("questionText")
-.innerText =
+document.getElementById("questionText")
+.innerText=
 questions[currentQuestion];
+
+document.getElementById("tracker")
+.innerText=
+currentQuestion+1;
+
+document.getElementById("progressBar")
+.style.width=
+((currentQuestion+1)/15*100)+"%";
 
 }
 
-function nextQuestion(){
+function answer(type){
 
 currentQuestion++;
 
-if(currentQuestion >= questions.length){
+if(currentQuestion>=15){
 
-alert("Simulation Complete");
+alert("Assessment Completed. PDF Report Generation will be added next.");
 
 return;
 
@@ -237,4 +328,5 @@ loadQuestion();
 </script>
 
 </body>
+
 </html>
