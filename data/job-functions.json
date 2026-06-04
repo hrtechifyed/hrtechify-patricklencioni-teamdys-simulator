@@ -1,1 +1,43 @@
+const JOB_FUNCTIONS = {
 
+"Human Resources": [
+"HR Business Partner",
+"Talent Acquisition",
+"Learning & Development",
+"Compensation & Benefits",
+"Employee Relations",
+"People Analytics",
+"HR Operations",
+"Others"
+],
+
+"Finance & Accounting": [
+"Accounting",
+"FP&A",
+"Treasury",
+"Audit",
+"Taxation",
+"Payroll",
+"Others"
+],
+
+"Information Technology": [
+"Software Engineering",
+"Cloud",
+"DevOps",
+"Infrastructure",
+"IT Support",
+"Architecture",
+"Others"
+],
+
+"Sales": [
+"Enterprise Sales",
+"Inside Sales",
+"Channel Sales",
+"Business Development",
+"Account Management",
+"Others"
+]
+
+};
