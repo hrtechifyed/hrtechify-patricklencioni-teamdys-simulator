@@ -39,11 +39,11 @@ border-radius:16px;
 
 <div class="text-center mb-8">
 
-<h1 class="text-5xl font-bold text-slate-800">
+<h1 class="text-5xl font-bold text-white">
 HRTechify Team Simulator
 </h1>
 
-<p class="text-slate-600 mt-3">
+<p class="text-slate-300 mt-3">
 Patrick Lencioni Leadership & Team Effectiveness Assessment
 </p>
 
@@ -70,12 +70,7 @@ Participant Information
 <input
 id="name"
 placeholder="Full Name"
-class="border p-3 rounded">
-
-<input
-id="organization"
-placeholder="Organization"
-class="border p-3 rounded">
+class="border p-3 rounded text-black">
 
 </div>
 
@@ -87,7 +82,7 @@ Job Function
 
 <select
 id="jobFunction"
-class="border p-3 rounded w-full mt-2"
+class="border p-3 rounded w-full mt-2 text-black"
 onchange="populateFamilies()">
 
 <option value="">Select Job Function</option>
@@ -125,7 +120,7 @@ Begin Assessment
 
 <div
 id="simulation"
-class="hidden hero-card p-8 mt-8">
+class="hidden hero-card p-10 mt-4 min-h-screen max-w-5xl mx-auto">
 
 <div class="mb-4">
 
@@ -639,6 +634,25 @@ const questions = [
 
 function startSimulation(){
 
+const fullName =
+document
+.getElementById("name")
+.value
+.trim();
+
+const regex =
+/^[A-Za-z]+(?:\s+[A-Za-z]+)+$/;
+
+if(!regex.test(fullName)){
+
+alert(
+"Please enter your first and last name."
+);
+
+return;
+
+}
+
 const assignedArc =
 assignArc();
 
@@ -646,6 +660,27 @@ console.log(
 "Assigned Arc:",
 assignedArc
 );
+
+document
+.getElementById("landingPage")
+.style.display =
+"none";
+
+document
+.getElementById("simulation")
+.classList
+.remove("hidden");
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+currentQuestion = 0;
+
+loadQuestion();
+
+}
 
 currentQuestion = 0;
 
@@ -663,7 +698,7 @@ function loadQuestion(){
 document
 .getElementById("questionTitle")
 .innerText =
-"Question " + (currentQuestion + 1);
+"Scenario " + (currentQuestion + 1);
 
 document
 .getElementById("questionText")
