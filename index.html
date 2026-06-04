@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -9,12 +8,12 @@
 <title>HRTechify Team Simulator</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="data/job-functions.js"></script>
 
 <style>
 
 body{
 background:#f8fafc;
+font-family:Arial,sans-serif;
 }
 
 .hero-card{
@@ -45,7 +44,7 @@ HRTechify Team Simulator
 </h1>
 
 <p class="text-slate-600 mt-3">
-Patrick Lencioni Framework Leadership & Team Effectiveness Assessment
+Patrick Lencioni Leadership & Team Effectiveness Assessment
 </p>
 
 </div>
@@ -55,9 +54,8 @@ Patrick Lencioni Framework Leadership & Team Effectiveness Assessment
 <img
 id="carousel"
 class="carousel-image"
-src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
-
->
+src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200"
+alt="Leadership">
 
 </div>
 
@@ -72,16 +70,6 @@ Participant Information
 <input
 id="name"
 placeholder="Full Name"
-class="border p-3 rounded">
-
-<input
-id="email"
-placeholder="Email"
-class="border p-3 rounded">
-
-<input
-id="designation"
-placeholder="Designation"
 class="border p-3 rounded">
 
 <input
@@ -109,7 +97,6 @@ class="border p-3 rounded w-full mt-2">
 </select>
 
 </div>
-
 
 <button
 onclick="startSimulation()"
@@ -142,13 +129,11 @@ style="width:0%">
 <h2
 id="questionTitle"
 class="text-3xl font-bold mb-4">
-
 </h2>
 
 <p
 id="questionText"
 class="text-lg mb-6">
-
 </p>
 
 <div class="grid gap-3">
@@ -187,17 +172,13 @@ Negative Team Behaviour
 class="fixed bottom-0 left-0 right-0 bg-slate-900 text-white p-3 text-center">
 
 HRTechify Team Simulator |
-Question <span id="tracker">
-0 </span>
-/15
+Question <span id="tracker">0</span>/15
 
 </footer>
 
 <script>
 
-<script>
-
-let currentQuestion=0;
+let currentQuestion = 0;
 
 function assignArc(){
 
@@ -232,36 +213,36 @@ return currentArc;
 
 }
 
-const images=[
+const images = [
 
-"https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
+"https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200",
 
-"https://images.unsplash.com/photo-1516321318423-f06f85e504b3",
+"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200",
 
-"https://images.unsplash.com/photo-1552664730-d307ca884978",
+"https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200",
 
-"https://images.unsplash.com/photo-1521737604893-d14cc237f11d"
+"https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200"
 
 ];
 
-let imageIndex=0;
+let imageIndex = 0;
 
-setInterval(()=>{
+setInterval(() => {
 
 imageIndex++;
 
-if(imageIndex>=images.length){
+if(imageIndex >= images.length){
 
-imageIndex=0;
+imageIndex = 0;
 
 }
 
-document.getElementById("carousel").src=
+document.getElementById("carousel").src =
 images[imageIndex];
 
 },3000);
 
-const questions=[
+const questions = [
 
 "Trust: A team member admits a major mistake that has impacted the project timeline. How does the team respond?",
 
@@ -305,8 +286,12 @@ console.log(
 assignedArc
 );
 
-document.getElementById("simulation")
-.classList.remove("hidden");
+currentQuestion = 0;
+
+document
+.getElementById("simulation")
+.classList
+.remove("hidden");
 
 loadQuestion();
 
@@ -314,21 +299,25 @@ loadQuestion();
 
 function loadQuestion(){
 
-document.getElementById("questionTitle")
-.innerText=
-"Question "+(currentQuestion+1);
+document
+.getElementById("questionTitle")
+.innerText =
+"Question " + (currentQuestion + 1);
 
-document.getElementById("questionText")
-.innerText=
+document
+.getElementById("questionText")
+.innerText =
 questions[currentQuestion];
 
-document.getElementById("tracker")
-.innerText=
-currentQuestion+1;
+document
+.getElementById("tracker")
+.innerText =
+currentQuestion + 1;
 
-document.getElementById("progressBar")
-.style.width=
-((currentQuestion+1)/15*100)+"%";
+document
+.getElementById("progressBar")
+.style.width =
+((currentQuestion + 1) / 15 * 100) + "%";
 
 }
 
@@ -336,9 +325,11 @@ function answer(type){
 
 currentQuestion++;
 
-if(currentQuestion>=15){
+if(currentQuestion >= questions.length){
 
-alert("Assessment Completed. PDF Report Generation will be added next.");
+alert(
+"Assessment Completed."
+);
 
 return;
 
@@ -351,5 +342,4 @@ loadQuestion();
 </script>
 
 </body>
-
 </html>
