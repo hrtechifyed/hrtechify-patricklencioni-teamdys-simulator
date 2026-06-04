@@ -9,6 +9,7 @@
 <title>HRTechify Team Simulator</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="data/job-functions.js"></script>
 
 <style>
 
@@ -109,27 +110,6 @@ class="border p-3 rounded w-full mt-2">
 
 </div>
 
-<div class="mt-4">
-
-<label class="font-semibold">
-Simulation Arc
-</label>
-
-<select
-id="arc"
-class="border p-3 rounded w-full mt-2">
-
-<option value="ArcA">
-Arc A - Critical Delivery Crisis
-</option>
-
-<option value="ArcB">
-Arc B - Transformation Program
-</option>
-
-</select>
-
-</div>
 
 <button
 onclick="startSimulation()"
@@ -215,7 +195,42 @@ Question <span id="tracker">
 
 <script>
 
+<script>
+
 let currentQuestion=0;
+
+function assignArc(){
+
+let lastArc =
+localStorage.getItem("lastArc");
+
+let currentArc;
+
+if(!lastArc){
+
+currentArc =
+Math.random() < 0.5
+? "ArcA"
+: "ArcB";
+
+}
+else{
+
+currentArc =
+lastArc === "ArcA"
+? "ArcB"
+: "ArcA";
+
+}
+
+localStorage.setItem(
+"lastArc",
+currentArc
+);
+
+return currentArc;
+
+}
 
 const images=[
 
@@ -281,6 +296,14 @@ const questions=[
 ];
 
 function startSimulation(){
+
+const assignedArc =
+assignArc();
+
+console.log(
+"Assigned Arc:",
+assignedArc
+);
 
 document.getElementById("simulation")
 .classList.remove("hidden");
