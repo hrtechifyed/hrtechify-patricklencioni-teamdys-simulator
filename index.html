@@ -90,52 +90,72 @@ Begin Assessment
 
 </div>
 
-<div
-id="storyTiles"
-class="hidden mb-6">
-
-<div class="grid grid-cols-5 gap-2">
-
-<div class="story-tile">1</div>
-<div class="story-tile">2</div>
-<div class="story-tile">3</div>
-<div class="story-tile">4</div>
-<div class="story-tile">5</div>
-
-<div class="story-tile">6</div>
-<div class="story-tile">7</div>
-<div class="story-tile">8</div>
-<div class="story-tile">9</div>
-<div class="story-tile">10</div>
-
-<div class="story-tile">11</div>
-<div class="story-tile">12</div>
-<div class="story-tile">13</div>
-<div class="story-tile">14</div>
-<div class="story-tile">15</div>
-
-</div>
-
-</div>
 
 <div
 id="simulation"
 class="hidden hero-card p-10 mt-6">
 
+<div class="mb-6">
+
+<div class="flex justify-between">
+
+<span id="questionCounter">
+Question 1 of 15
+</span>
+
+<span id="progressText">
+7%
+</span>
+
+</div>
+
+<div class="w-full bg-slate-700 rounded-full h-3 mt-2">
+
+<div
+id="progressBar"
+class="bg-blue-500 h-3 rounded-full"
+style="width:0%">
+</div>
+
+</div>
+
+</div>
+
 <h2
 id="questionTitle"
-class="text-3xl font-bold mb-4">
+class="text-4xl font-bold mb-4">
 </h2>
 
 <p
 id="questionText"
-class="text-lg mb-6">
+class="text-xl mb-8">
 </p>
 
 <div
 id="options"
-class="grid gap-4 mt-6">
+class="grid gap-4">
 </div>
+
+<div
+class="flex justify-between mt-8">
+
+<button
+id="backBtn"
+onclick="previousQuestion()"
+class="bg-slate-700 px-6 py-3 rounded">
+
+Back
+
+</button>
+
+<button
+id="nextBtn"
+onclick="nextQuestion()"
+class="bg-blue-600 px-6 py-3 rounded">
+
+Next
+
+</button>
 
 </div>
 
