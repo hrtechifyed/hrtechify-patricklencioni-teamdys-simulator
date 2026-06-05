@@ -1,16 +1,4 @@
 body{
-margin:0;
-padding:0;
-min-height:100vh;
-
-background:
-linear-gradient(
-135deg,
-#0f172a 0%,
-#1e293b 50%,
-#312e81 100%
-);
-body{
     margin:0;
     padding:0;
     min-height:100vh;
@@ -29,6 +17,7 @@ body{
 
 .hero-card{
     background:rgba(255,255,255,.08);
+
     backdrop-filter:blur(20px);
 
     border:1px solid rgba(255,255,255,.15);
@@ -54,65 +43,10 @@ select{
 .hidden{
     display:none;
 }
-font-family:Arial,sans-serif;
-color:white;
-}
-
-.hero-card{
-
-background:
-rgba(255,255,255,.08);
-
-backdrop-filter:
-blur(20px);
-
-border:
-1px solid rgba(255,255,255,.15);
-
-border-radius:24px;
-
-box-shadow:
-0 20px 40px rgba(0,0,0,.35);
-}
 
 .story-tile{
+    background:#1e293b;
 
-background:#1e293b;
-padding:16px;
-border-radius:12px;
-text-align:center;
-font-weight:bold;
-transition:.3s;
+    padding:16px;
 
-}
-
-.active-tile{
-
-background:#2563eb;
-transform:scale(1.05);
-
-}
-.option-btn{
-
-background:#1e293b;
-color:white;
-
-padding:16px;
-
-border-radius:12px;
-
-text-align:left;
-
-transition:.3s;
-
-cursor:pointer;
-
-}
-
-.option-btn:hover{
-
-background:#2563eb;
-
-transform:translateY(-2px);
-
-}
+    border-radius
