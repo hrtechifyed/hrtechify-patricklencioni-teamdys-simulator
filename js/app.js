@@ -15,24 +15,12 @@ const questions = [
 {
 type:"trust",
 title:"Leadership Crisis",
-text:"A respected team member admits a mistake that may delay delivery.",
+text:"A respected team member admits a major mistake that may delay delivery.",
 options:[
-{
-text:"Encourage open discussion and collaborative problem solving",
-score:2
-},
-{
-text:"Privately investigate before responding",
-score:1
-},
-{
-text:"Escalate immediately to leadership",
-score:0
-},
-{
-text:"Avoid discussion and move forward",
-score:-1
-}
+{text:"Encourage open discussion and collaborative problem solving",score:2},
+{text:"Privately investigate before responding",score:1},
+{text:"Escalate immediately to leadership",score:0},
+{text:"Avoid discussion and move forward",score:-1}
 ]
 },
 
@@ -41,22 +29,10 @@ type:"conflict",
 title:"Priority Disagreement",
 text:"Two senior leaders strongly disagree on project priorities.",
 options:[
-{
-text:"Facilitate a structured debate",
-score:2
-},
-{
-text:"Seek additional information",
-score:1
-},
-{
-text:"Allow leadership to decide",
-score:0
-},
-{
-text:"Avoid confrontation",
-score:-1
-}
+{text:"Facilitate a structured debate",score:2},
+{text:"Seek additional information",score:1},
+{text:"Allow leadership to decide",score:0},
+{text:"Avoid confrontation",score:-1}
 ]
 },
 
@@ -65,26 +41,15 @@ type:"commitment",
 title:"Critical Decision",
 text:"The team must make a decision within 24 hours.",
 options:[
-{
-text:"Gain alignment and commit",
-score:2
-},
-{
-text:"Request clarification",
-score:1
-},
-{
-text:"Delay decision",
-score:0
-},
-{
-text:"Avoid ownership",
-score:-1
-}
+{text:"Gain alignment and commit",score:2},
+{text:"Request clarification",score:1},
+{text:"Delay decision",score:0},
+{text:"Avoid ownership",score:-1}
 ]
 }
 
 ];
+
 function populateFunctions(){
 
 const dropdown =
@@ -157,18 +122,14 @@ return;
 }
 
 const jobFunction =
-document.getElementById("jobFunction")
-.value;
+document.getElementById("jobFunction").value;
 
 const jobFamily =
-document.getElementById("jobFamily")
-.value;
+document.getElementById("jobFamily").value;
 
 if(!jobFunction){
 
-alert(
-"Please select Job Function"
-);
+alert("Please select Job Function");
 
 return;
 
@@ -176,35 +137,20 @@ return;
 
 if(!jobFamily){
 
-alert(
-"Please select Job Family"
-);
+alert("Please select Job Family");
 
 return;
 
 }
 
-document
-.getElementById("landingPage")
-.style.display =
-"none";
+document.getElementById("landingPage")
+.style.display="none";
 
-document
-.getElementById("simulation")
-.classList
-.remove("hidden");
-  
-document
-.getElementById("storyTiles")
-.classList
-.remove("hidden");
-  
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
+document.getElementById("storyTiles")
+.classList.remove("hidden");
 
-currentQuestion = 0;
+document.getElementById("simulation")
+.classList.remove("hidden");
 
 loadQuestion();
 
@@ -215,18 +161,15 @@ function loadQuestion(){
 const current =
 questions[currentQuestion];
 
-document
-.getElementById("questionTitle")
+document.getElementById("questionTitle")
 .innerText =
 current.title;
 
-document
-.getElementById("questionText")
+document.getElementById("questionText")
 .innerText =
 current.text;
 
-document
-.getElementById("tracker")
+document.getElementById("tracker")
 .innerText =
 currentQuestion + 1;
 
@@ -278,51 +221,24 @@ loadQuestion();
 
 function showResults(){
 
-document
-.getElementById("simulation")
+document.getElementById("simulation")
 .innerHTML = `
 
 <h2 class="text-4xl font-bold mb-6">
-Leadership Assessment Report
+Assessment Complete
 </h2>
 
-<div class="space-y-4">
+<p class="mb-2">Trust: ${scores.trust}</p>
 
-<p>Trust Score: ${scores.trust}</p>
+<p class="mb-2">Conflict: ${scores.conflict}</p>
 
-<p>Conflict Score: ${scores.conflict}</p>
+<p class="mb-2">Commitment: ${scores.commitment}</p>
 
-<p>Commitment Score: ${scores.commitment}</p>
+<p class="mb-2">Accountability: ${scores.accountability}</p>
 
-<p>Accountability Score: ${scores.accountability}</p>
-
-<p>Results Score: ${scores.results}</p>
-
-</div>
+<p class="mb-2">Results: ${scores.results}</p>
 
 `;
-
-}
-function updateStoryTiles(){
-
-const tiles =
-document.querySelectorAll(".story-tile");
-
-tiles.forEach((tile,index)=>{
-
-tile.classList.remove(
-"active-tile"
-);
-
-if(index===currentQuestion){
-
-tile.classList.add(
-"active-tile"
-);
-
-}
-
-});
 
 }
 
