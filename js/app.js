@@ -109,13 +109,10 @@ document.getElementById("name")
 .value
 .trim();
 
-const regex =
-/^[A-Za-z]{2,}\s+[A-Za-z]{2,}.*$/;
-
-if(!regex.test(name)){
+if(name.length < 2){
 
 alert(
-"Please enter First Name and Last Name."
+"Please enter your first name."
 );
 
 return;
