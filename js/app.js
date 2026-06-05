@@ -1,5 +1,5 @@
 let currentQuestion = 0;
-
+let selectedStory = [];
 let scores = {
 
 trust:0,
