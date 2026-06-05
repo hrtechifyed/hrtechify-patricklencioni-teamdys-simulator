@@ -35,53 +35,27 @@ story:"Performance results are below expectations and corrective action is requi
 const jobContexts = {
 
 "Human Resources":{
-
 mission:"Workforce Transformation",
-
 stakeholder:"CHRO",
-
 asset:"Employee Experience"
-
 },
 
 "Information Technology":{
-
 mission:"Digital Transformation",
-
 stakeholder:"CIO",
-
 asset:"Technology Platform"
-
 },
 
 "Sales":{
-
 mission:"Revenue Growth",
-
 stakeholder:"Chief Revenue Officer",
-
 asset:"Strategic Account"
-
 },
 
 "Finance & Accounting":{
-
 mission:"Financial Performance",
-
 stakeholder:"CFO",
-
 asset:"Budget"
-
-},
-
-"Product Management":{
-
-mission:"Product Launch",
-
-stakeholder:"Chief Product Officer",
-
-asset:"Roadmap"
-
 }
 
 };
@@ -96,27 +70,16 @@ return scenarioTemplates.map(template => {
 
 return {
 
-category:template.category,
-
 title:template.title,
 
 text:
-
 template.story +
-
-" The mission is " +
-
+"\n\nMission: " +
 context.mission +
-
-". The primary stakeholder is the " +
-
+"\nStakeholder: " +
 context.stakeholder +
-
-". The impacted area is " +
-
-context.asset +
-
-"."
+"\nAsset: " +
+context.asset
 
 };
 
