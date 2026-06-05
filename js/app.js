@@ -1,24 +1,106 @@
 let currentQuestion = 0;
 
+let scores = {
+
+trust:0,
+conflict:0,
+commitment:0,
+accountability:0,
+results:0
+
+};
+
 const questions = [
 
-"Trust: A team member admits a mistake.",
-"Conflict: Two leaders disagree.",
-"Trust: Stakeholders challenge capability.",
-"Commitment: A critical decision is needed.",
-"Conflict: Planning discussions escalate.",
+{
+type:"trust",
+title:"Leadership Crisis",
+text:"A respected team member admits a major mistake that may delay delivery."
+},
 
-"Accountability: A deadline is missed.",
-"Trust: A colleague requests help.",
-"Commitment: Leadership seeks alignment.",
-"Results: Metrics are declining.",
-"Conflict: Resource allocation dispute.",
+{
+type:"conflict",
+title:"Escalation",
+text:"Two senior leaders disagree publicly about priorities."
+},
 
-"Accountability: Expectations are missed.",
-"Results: Team goals diverge.",
-"Trust: Feedback is requested.",
-"Commitment: Change is proposed.",
-"Results: Outcomes are reviewed."
+{
+type:"trust",
+title:"Stakeholder Pressure",
+text:"An executive questions the team's capability."
+},
+
+{
+type:"commitment",
+title:"Critical Decision",
+text:"A decision must be made within 24 hours."
+},
+
+{
+type:"conflict",
+title:"Planning Breakdown",
+text:"The planning workshop becomes tense."
+},
+
+{
+type:"accountability",
+title:"Missed Deadline",
+text:"A key milestone is missed."
+},
+
+{
+type:"trust",
+title:"Support Request",
+text:"A team member asks for help publicly."
+},
+
+{
+type:"commitment",
+title:"Alignment Meeting",
+text:"Leadership requests final commitment."
+},
+
+{
+type:"results",
+title:"Performance Dip",
+text:"Performance indicators begin falling."
+},
+
+{
+type:"conflict",
+title:"Resource Battle",
+text:"Teams compete for limited resources."
+},
+
+{
+type:"accountability",
+title:"Repeated Failure",
+text:"One contributor continues missing expectations."
+},
+
+{
+type:"results",
+title:"Goal Drift",
+text:"Personal objectives begin replacing team goals."
+},
+
+{
+type:"trust",
+title:"Feedback Round",
+text:"Honest feedback is requested."
+},
+
+{
+type:"commitment",
+title:"Transformation Change",
+text:"A difficult change initiative is proposed."
+},
+
+{
+type:"results",
+title:"Final Review",
+text:"Project outcomes are reviewed by leadership."
+}
 
 ];
 
@@ -26,6 +108,9 @@ function populateFunctions(){
 
 const dropdown =
 document.getElementById("jobFunction");
+
+dropdown.innerHTML =
+'<option value="">Select Job Function</option>';
 
 Object.keys(jobFunctions)
 .forEach(func=>{
@@ -45,8 +130,7 @@ dropdown.appendChild(option);
 function populateFamilies(){
 
 const func =
-document.getElementById("jobFunction")
-.value;
+document.getElementById("jobFunction").value;
 
 const familyDropdown =
 document.getElementById("jobFamily");
@@ -75,15 +159,44 @@ function startSimulation(){
 
 const name =
 document.getElementById("name")
-.value.trim();
+.value
+.trim();
 
 const regex =
-/^[A-Za-z]+(?:\s+[A-Za-z]+)+$/;
+/^[A-Za-z]{2,}\s+[A-Za-z]{2,}.*$/;
 
 if(!regex.test(name)){
 
 alert(
-"Enter first and last name."
+"Please enter First Name and Last Name."
+);
+
+return;
+
+}
+
+const jobFunction =
+document.getElementById("jobFunction")
+.value;
+
+const jobFamily =
+document.getElementById("jobFamily")
+.value;
+
+if(!jobFunction){
+
+alert(
+"Please select Job Function"
+);
+
+return;
+
+}
+
+if(!jobFamily){
+
+alert(
+"Please select Job Family"
 );
 
 return;
@@ -100,6 +213,11 @@ document
 .classList
 .remove("hidden");
 
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
 currentQuestion = 0;
 
 loadQuestion();
@@ -108,38 +226,93 @@ loadQuestion();
 
 function loadQuestion(){
 
+const current =
+questions[currentQuestion];
+
 document
 .getElementById("questionTitle")
 .innerText =
-"Scenario " + (currentQuestion+1);
+current.title;
 
 document
 .getElementById("questionText")
 .innerText =
-questions[currentQuestion];
+current.text;
 
 document
 .getElementById("tracker")
 .innerText =
-currentQuestion+1;
+(currentQuestion + 1);
+
+updateStoryTiles();
 
 }
 
-function answer(){
+function answer(choice){
+
+const category =
+questions[currentQuestion]
+.type;
+
+if(choice==="positive"){
+
+scores[category]+=2;
+
+}
+else if(choice==="neutral"){
+
+scores[category]+=1;
+
+}
 
 currentQuestion++;
 
 if(currentQuestion >= questions.length){
 
-alert(
-"Assessment Complete"
-);
+showResults();
 
 return;
 
 }
 
 loadQuestion();
+
+}
+
+function showResults(){
+
+const report =
+
+"Trust: " + scores.trust + "\n" +
+"Conflict: " + scores.conflict + "\n" +
+"Commitment: " + scores.commitment + "\n" +
+"Accountability: " + scores.accountability + "\n" +
+"Results: " + scores.results;
+
+alert(report);
+
+}
+
+function updateStoryTiles(){
+
+const tiles =
+document.querySelectorAll(".story-tile");
+
+tiles.forEach((tile,index)=>{
+
+tile.classList.remove(
+"active-tile"
+);
+
+if(index===currentQuestion){
+
+tile.classList.add(
+"active-tile"
+);
+
+}
+
+});
 
 }
 
