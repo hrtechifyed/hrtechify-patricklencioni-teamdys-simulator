@@ -1,333 +1,155 @@
-let currentQuestion = 0;
+<!DOCTYPE html>
+<html>
 
-let scores = {
+<head>
 
-trust:0,
-conflict:0,
-commitment:0,
-accountability:0,
-results:0
+<title>HRTechify Team Simulator</title>
 
-};
+<script src="https://cdn.tailwindcss.com"></script>
 
-const questions = [
+<link rel="stylesheet" href="css/style.css">
 
-{
-type:"trust",
-title:"Leadership Crisis",
-text:"A respected team member admits a mistake that may delay delivery.",
-options:[
-{
-text:"Encourage open discussion and collaborative problem solving",
-score:2
-},
-{
-text:"Privately investigate before responding",
-score:1
-},
-{
-text:"Escalate immediately to leadership",
-score:0
-},
-{
-text:"Avoid discussion and move forward",
-score:-1
-}
-]
-},
+</head>
 
-{
-type:"conflict",
-title:"Priority Disagreement",
-text:"Two senior leaders strongly disagree on project priorities.",
-options:[
-{
-text:"Facilitate a structured debate",
-score:2
-},
-{
-text:"Seek additional information",
-score:1
-},
-{
-text:"Allow leadership to decide",
-score:0
-},
-{
-text:"Avoid confrontation",
-score:-1
-}
-]
-},
+<body>
 
-{
-type:"commitment",
-title:"Critical Decision",
-text:"The team must make a decision within 24 hours.",
-options:[
-{
-text:"Gain alignment and commit",
-score:2
-},
-{
-text:"Request clarification",
-score:1
-},
-{
-text:"Delay decision",
-score:0
-},
-{
-text:"Avoid ownership",
-score:-1
-}
-]
-}
+<div class="max-w-6xl mx-auto p-6">
 
-];
-function populateFunctions(){
+<div class="text-center mb-8">
 
-const dropdown =
-document.getElementById("jobFunction");
+<h1 class="text-5xl font-bold">
+HRTechify Team Simulator
+</h1>
 
-dropdown.innerHTML =
-'<option value="">Select Job Function</option>';
-
-Object.keys(jobFunctions)
-.forEach(func=>{
-
-const option =
-document.createElement("option");
-
-option.value = func;
-option.textContent = func;
-
-dropdown.appendChild(option);
-
-});
-
-}
-
-function populateFamilies(){
-
-const func =
-document.getElementById("jobFunction").value;
-
-const familyDropdown =
-document.getElementById("jobFamily");
-
-familyDropdown.innerHTML =
-'<option value="">Select Job Family</option>';
-
-if(!func) return;
-
-jobFunctions[func]
-.forEach(family=>{
-
-const option =
-document.createElement("option");
-
-option.value = family;
-option.textContent = family;
-
-familyDropdown.appendChild(option);
-
-});
-
-}
-
-function startSimulation(){
-
-const name =
-document.getElementById("name")
-.value
-.trim();
-
-const regex =
-/^[A-Za-z]{2,}\s+[A-Za-z]{2,}.*$/;
-
-if(!regex.test(name)){
-
-alert(
-"Please enter First Name and Last Name."
-);
-
-return;
-
-}
-
-const jobFunction =
-document.getElementById("jobFunction")
-.value;
-
-const jobFamily =
-document.getElementById("jobFamily")
-.value;
-
-if(!jobFunction){
-
-alert(
-"Please select Job Function"
-);
-
-return;
-
-}
-
-if(!jobFamily){
-
-alert(
-"Please select Job Family"
-);
-
-return;
-
-}
-
-document
-.getElementById("landingPage")
-.style.display =
-"none";
-
-document
-.getElementById("simulation")
-.classList
-.remove("hidden");
-  
-document
-.getElementById("storyTiles")
-.classList
-.remove("hidden");
-  
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-currentQuestion = 0;
-
-loadQuestion();
-
-}
-
-function loadQuestion(){
-
-const current =
-questions[currentQuestion];
-
-document
-.getElementById("questionTitle")
-.innerText =
-current.title;
-
-document
-.getElementById("questionText")
-.innerText =
-current.text;
-
-document
-.getElementById("tracker")
-.innerText =
-currentQuestion + 1;
-
-const optionsContainer =
-document.getElementById("options");
-
-optionsContainer.innerHTML = "";
-
-current.options.forEach(option=>{
-
-const button =
-document.createElement("button");
-
-button.className =
-"option-btn";
-
-button.innerText =
-option.text;
-
-button.onclick = () =>
-answer(option.score);
-
-optionsContainer.appendChild(button);
-
-});
-
-}
-
-function answer(score){
-
-const category =
-questions[currentQuestion].type;
-
-scores[category] += score;
-
-currentQuestion++;
-
-if(currentQuestion >= questions.length){
-
-showResults();
-
-return;
-
-}
-
-loadQuestion();
-
-}
-
-function showResults(){
-
-document
-.getElementById("simulation")
-.innerHTML = `
-
-<h2 class="text-4xl font-bold mb-6">
-Leadership Assessment Report
-</h2>
-
-<div class="space-y-4">
-
-<p>Trust Score: ${scores.trust}</p>
-
-<p>Conflict Score: ${scores.conflict}</p>
-
-<p>Commitment Score: ${scores.commitment}</p>
-
-<p>Accountability Score: ${scores.accountability}</p>
-
-<p>Results Score: ${scores.results}</p>
+<p class="text-slate-300 mt-3">
+Leadership & Team Effectiveness Assessment
+</p>
 
 </div>
 
-`;
+<div id="landingPage">
 
-}
-function updateStoryTiles(){
+<div class="hero-card p-4 mb-8 max-w-5xl mx-auto">
 
-const tiles =
-document.querySelectorAll(".story-tile");
+<img
+id="carousel"
+class="carousel-image"
+src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200">
 
-tiles.forEach((tile,index)=>{
+</div>
 
-tile.classList.remove(
-"active-tile"
-);
+<div class="hero-card p-8 max-w-4xl mx-auto">
 
-if(index===currentQuestion){
+<h2 class="text-2xl font-bold mb-6">
+Participant Information
+</h2>
 
-tile.classList.add(
-"active-tile"
-);
+<label class="block mb-2 font-semibold">
+Full Name *
+</label>
 
-}
+<input
+id="name"
+placeholder="Example: John Smith"
+class="border p-3 rounded w-full mb-4 text-black">
 
-});
+<p class="text-sm text-slate-300 mb-4">
+Please enter first name and last name.
+</p>
 
-}
+<select
+id="jobFunction"
+onchange="populateFamilies()"
+class="border p-3 rounded w-full mb-4 text-black">
 
-window.onload = function(){
+<option value="">
+Select Job Function
+</option>
 
-populateFunctions();
+</select>
 
-};
+<select
+id="jobFamily"
+class="border p-3 rounded w-full text-black">
+
+<option value="">
+Select Job Family
+</option>
+
+</select>
+
+<button
+onclick="startSimulation()"
+class="bg-blue-600 text-white px-6 py-3 rounded-lg mt-6">
+
+Begin Assessment
+
+</button>
+
+</div>
+
+</div>
+
+<div
+id="storyTiles"
+class="hidden mb-6">
+
+<div class="grid grid-cols-5 gap-2">
+
+<div class="story-tile">1</div>
+<div class="story-tile">2</div>
+<div class="story-tile">3</div>
+<div class="story-tile">4</div>
+<div class="story-tile">5</div>
+
+<div class="story-tile">6</div>
+<div class="story-tile">7</div>
+<div class="story-tile">8</div>
+<div class="story-tile">9</div>
+<div class="story-tile">10</div>
+
+<div class="story-tile">11</div>
+<div class="story-tile">12</div>
+<div class="story-tile">13</div>
+<div class="story-tile">14</div>
+<div class="story-tile">15</div>
+
+</div>
+
+</div>
+
+<div
+id="simulation"
+class="hidden hero-card p-10 mt-6">
+
+<h2
+id="questionTitle"
+class="text-3xl font-bold mb-4">
+</h2>
+
+<p
+id="questionText"
+class="text-lg mb-6">
+</p>
+
+<div
+id="options"
+class="grid gap-4 mt-6">
+</div>
+
+</div>
+
+</div>
+
+<footer
+class="fixed bottom-0 left-0 right-0 bg-black text-white text-center p-3">
+
+Scenario <span id="tracker">0</span>/15
+
+</footer>
+
+<script src="data/job-functions.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
