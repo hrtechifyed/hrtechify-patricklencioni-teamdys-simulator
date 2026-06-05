@@ -1,5 +1,6 @@
 let currentQuestion = 0;
 let selectedStory = [];
+let generatedStory = [];
 let scores = {
 
 trust:0,
@@ -128,8 +129,8 @@ Math.random() < 0.5
 ? "ArcA"
 : "ArcB";
 
-selectedStory =
-stories[jobFunction][assignedArc];
+generatedStory =
+generateStory(jobFunction);
   
 const jobFamily =
 document.getElementById("jobFamily").value;
@@ -166,7 +167,7 @@ loadQuestion();
 function loadQuestion(){
 
 const current =
-selectedStory[currentQuestion];
+generatedStory[currentQuestion];
 
 document.getElementById("questionTitle")
 .innerText =
