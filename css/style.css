@@ -92,3 +92,27 @@ background:#2563eb;
 transform:scale(1.05);
 
 }
+.option-btn{
+
+background:#1e293b;
+color:white;
+
+padding:16px;
+
+border-radius:12px;
+
+text-align:left;
+
+transition:.3s;
+
+cursor:pointer;
+
+}
+
+.option-btn:hover{
+
+background:#2563eb;
+
+transform:translateY(-2px);
+
+}
