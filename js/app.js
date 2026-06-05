@@ -123,7 +123,14 @@ return;
 
 const jobFunction =
 document.getElementById("jobFunction").value;
+const assignedArc =
+Math.random() < 0.5
+? "ArcA"
+: "ArcB";
 
+selectedStory =
+stories[jobFunction][assignedArc];
+  
 const jobFamily =
 document.getElementById("jobFamily").value;
 
@@ -159,7 +166,7 @@ loadQuestion();
 function loadQuestion(){
 
 const current =
-questions[currentQuestion];
+selectedStory[currentQuestion];
 
 document.getElementById("questionTitle")
 .innerText =
