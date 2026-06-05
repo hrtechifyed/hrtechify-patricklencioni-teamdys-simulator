@@ -1,55 +1,13 @@
 let currentQuestion = 0;
-let selectedStory = [];
-let generatedStory = [];
-let scores = {
 
-trust:0,
-conflict:0,
-commitment:0,
-accountability:0,
-results:0
+let storyData = [];
 
-};
+let answers = [];
 
-const questions = [
 
-{
-type:"trust",
-title:"Leadership Crisis",
-text:"A respected team member admits a major mistake that may delay delivery.",
-options:[
-{text:"Encourage open discussion and collaborative problem solving",score:2},
-{text:"Privately investigate before responding",score:1},
-{text:"Escalate immediately to leadership",score:0},
-{text:"Avoid discussion and move forward",score:-1}
-]
-},
-
-{
-type:"conflict",
-title:"Priority Disagreement",
-text:"Two senior leaders strongly disagree on project priorities.",
-options:[
-{text:"Facilitate a structured debate",score:2},
-{text:"Seek additional information",score:1},
-{text:"Allow leadership to decide",score:0},
-{text:"Avoid confrontation",score:-1}
-]
-},
-
-{
-type:"commitment",
-title:"Critical Decision",
-text:"The team must make a decision within 24 hours.",
-options:[
-{text:"Gain alignment and commit",score:2},
-{text:"Request clarification",score:1},
-{text:"Delay decision",score:0},
-{text:"Avoid ownership",score:-1}
-]
-}
-
-];
+/* -------------------------
+   Job Functions
+--------------------------*/
 
 function populateFunctions(){
 
@@ -60,7 +18,7 @@ dropdown.innerHTML =
 '<option value="">Select Job Function</option>';
 
 Object.keys(jobFunctions)
-.forEach(func=>{
+.forEach(func => {
 
 const option =
 document.createElement("option");
@@ -73,6 +31,11 @@ dropdown.appendChild(option);
 });
 
 }
+
+
+/* -------------------------
+   Job Families
+--------------------------*/
 
 function populateFamilies(){
 
@@ -88,7 +51,7 @@ familyDropdown.innerHTML =
 if(!func) return;
 
 jobFunctions[func]
-.forEach(family=>{
+.forEach(family => {
 
 const option =
 document.createElement("option");
@@ -102,6 +65,11 @@ familyDropdown.appendChild(option);
 
 }
 
+
+/* -------------------------
+   Start Assessment
+--------------------------*/
+
 function startSimulation(){
 
 const name =
@@ -112,7 +80,7 @@ document.getElementById("name")
 if(name.length < 2){
 
 alert(
-"Please enter your first name."
+"Please enter at least your first name."
 );
 
 return;
@@ -120,132 +88,241 @@ return;
 }
 
 const jobFunction =
-document.getElementById("jobFunction").value;
-const assignedArc =
-Math.random() < 0.5
-? "ArcA"
-: "ArcB";
-
-generatedStory =
-generateStory(jobFunction);
-  
-const jobFamily =
-document.getElementById("jobFamily").value;
+document.getElementById("jobFunction")
+.value;
 
 if(!jobFunction){
 
-alert("Please select Job Function");
+alert(
+"Please select a Job Function."
+);
 
 return;
 
 }
 
-if(!jobFamily){
+storyData =
+generateStory(jobFunction);
 
-alert("Please select Job Family");
+currentQuestion = 0;
 
-return;
+answers = [];
 
-}
+document
+.getElementById("landingPage")
+.style.display = "none";
 
-document.getElementById("landingPage")
-.style.display="none";
-
-document.getElementById("storyTiles")
-.classList.remove("hidden");
-
-document.getElementById("simulation")
+document
+.getElementById("simulation")
 .classList.remove("hidden");
 
 loadQuestion();
 
 }
+
+
+/* -------------------------
+   Load Question
+--------------------------*/
 
 function loadQuestion(){
 
-const current =
-generatedStory[currentQuestion];
+const scenario =
+storyData[currentQuestion];
 
-document.getElementById("questionTitle")
+document
+.getElementById("questionTitle")
 .innerText =
-current.title;
+scenario.title;
 
-document.getElementById("questionText")
+document
+.getElementById("questionText")
 .innerText =
-current.text;
+scenario.text;
 
-document.getElementById("tracker")
+document
+.getElementById("questionCounter")
 .innerText =
-currentQuestion + 1;
+"Question " +
+(currentQuestion + 1) +
+" of " +
+storyData.length;
 
-const optionsContainer =
-document.getElementById("options");
+const percent =
+Math.round(
+((currentQuestion + 1)
+/
+storyData.length)
+* 100
+);
 
-optionsContainer.innerHTML = "";
+document
+.getElementById("progressText")
+.innerText =
+percent + "%";
 
-current.options.forEach(option=>{
+document
+.getElementById("progressBar")
+.style.width =
+percent + "%";
 
-const button =
-document.createElement("button");
-
-button.className =
-"option-btn";
-
-button.innerText =
-option.text;
-
-button.onclick = () =>
-answer(option.score);
-
-optionsContainer.appendChild(button);
-
-});
-
-}
-
-function answer(score){
-
-const category =
-questions[currentQuestion].type;
-
-scores[category] += score;
-
-currentQuestion++;
-
-if(currentQuestion >= questions.length){
-
-showResults();
-
-return;
-
-}
-
-loadQuestion();
-
-}
-
-function showResults(){
-
-document.getElementById("simulation")
+document
+.getElementById("options")
 .innerHTML = `
 
-<h2 class="text-4xl font-bold mb-6">
-Assessment Complete
-</h2>
+<button
+class="option-btn"
+onclick="selectOption(3)">
 
-<p class="mb-2">Trust: ${scores.trust}</p>
+Strongly Effective Response
 
-<p class="mb-2">Conflict: ${scores.conflict}</p>
+</button>
 
-<p class="mb-2">Commitment: ${scores.commitment}</p>
+<button
+class="option-btn"
+onclick="selectOption(2)">
 
-<p class="mb-2">Accountability: ${scores.accountability}</p>
+Moderately Effective Response
 
-<p class="mb-2">Results: ${scores.results}</p>
+</button>
+
+<button
+class="option-btn"
+onclick="selectOption(1)">
+
+Ineffective Response
+
+</button>
 
 `;
 
 }
+
+
+/* -------------------------
+   Select Option
+--------------------------*/
+
+function selectOption(score){
+
+answers[currentQuestion] =
+score;
+
+const buttons =
+document.querySelectorAll(
+"#options button"
+);
+
+buttons.forEach(btn => {
+
+btn.style.background =
+"#1e293b";
+
+});
+
+event.target.style.background =
+"#2563eb";
+
+}
+
+
+/* -------------------------
+   Next Question
+--------------------------*/
+
+function nextQuestion(){
+
+if(
+answers[currentQuestion]
+=== undefined
+){
+
+alert(
+"Please select an option before continuing."
+);
+
+return;
+
+}
+
+if(
+currentQuestion
+<
+storyData.length - 1
+){
+
+currentQuestion++;
+
+loadQuestion();
+
+}
+else{
+
+finishAssessment();
+
+}
+
+}
+
+
+/* -------------------------
+   Previous Question
+--------------------------*/
+
+function previousQuestion(){
+
+if(currentQuestion > 0){
+
+currentQuestion--;
+
+loadQuestion();
+
+}
+
+}
+
+
+/* -------------------------
+   Finish Assessment
+--------------------------*/
+
+function finishAssessment(){
+
+let total = 0;
+
+answers.forEach(score => {
+
+total += score;
+
+});
+
+const maxScore =
+storyData.length * 3;
+
+const percentage =
+Math.round(
+(total / maxScore)
+* 100
+);
+
+alert(
+
+"Assessment Complete\n\n" +
+
+"Team Health Score: " +
+
+percentage +
+
+"%"
+
+);
+
+}
+
+
+/* -------------------------
+   Page Load
+--------------------------*/
 
 window.onload = function(){
 
