@@ -1,31 +1,26 @@
 const scenarioTemplates = [
 
 {
-category:"trust",
 title:"Team Confidence Challenge",
 story:"A key stakeholder questions the team's capability to deliver a critical initiative."
 },
 
 {
-category:"conflict",
 title:"Priority Conflict",
 story:"Senior leaders disagree on the direction of the project."
 },
 
 {
-category:"commitment",
 title:"Decision Point",
 story:"The team must commit to a high-impact decision with limited information."
 },
 
 {
-category:"accountability",
 title:"Execution Risk",
 story:"A major milestone has been missed and leadership wants answers."
 },
 
 {
-category:"results",
 title:"Outcome Review",
 story:"Performance results are below expectations and corrective action is required."
 }
