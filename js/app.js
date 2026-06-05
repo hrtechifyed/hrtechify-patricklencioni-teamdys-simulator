@@ -212,7 +212,12 @@ document
 .getElementById("simulation")
 .classList
 .remove("hidden");
-
+  
+document
+.getElementById("storyTiles")
+.classList
+.remove("hidden");
+  
 window.scrollTo({
 top:0,
 behavior:"smooth"
