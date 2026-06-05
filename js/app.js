@@ -15,95 +15,76 @@ const questions = [
 {
 type:"trust",
 title:"Leadership Crisis",
-text:"A respected team member admits a major mistake that may delay delivery."
+text:"A respected team member admits a mistake that may delay delivery.",
+options:[
+{
+text:"Encourage open discussion and collaborative problem solving",
+score:2
+},
+{
+text:"Privately investigate before responding",
+score:1
+},
+{
+text:"Escalate immediately to leadership",
+score:0
+},
+{
+text:"Avoid discussion and move forward",
+score:-1
+}
+]
 },
 
 {
 type:"conflict",
-title:"Escalation",
-text:"Two senior leaders disagree publicly about priorities."
-},
-
+title:"Priority Disagreement",
+text:"Two senior leaders strongly disagree on project priorities.",
+options:[
 {
-type:"trust",
-title:"Stakeholder Pressure",
-text:"An executive questions the team's capability."
+text:"Facilitate a structured debate",
+score:2
+},
+{
+text:"Seek additional information",
+score:1
+},
+{
+text:"Allow leadership to decide",
+score:0
+},
+{
+text:"Avoid confrontation",
+score:-1
+}
+]
 },
 
 {
 type:"commitment",
 title:"Critical Decision",
-text:"A decision must be made within 24 hours."
-},
-
+text:"The team must make a decision within 24 hours.",
+options:[
 {
-type:"conflict",
-title:"Planning Breakdown",
-text:"The planning workshop becomes tense."
+text:"Gain alignment and commit",
+score:2
 },
-
 {
-type:"accountability",
-title:"Missed Deadline",
-text:"A key milestone is missed."
+text:"Request clarification",
+score:1
 },
-
 {
-type:"trust",
-title:"Support Request",
-text:"A team member asks for help publicly."
+text:"Delay decision",
+score:0
 },
-
 {
-type:"commitment",
-title:"Alignment Meeting",
-text:"Leadership requests final commitment."
-},
-
-{
-type:"results",
-title:"Performance Dip",
-text:"Performance indicators begin falling."
-},
-
-{
-type:"conflict",
-title:"Resource Battle",
-text:"Teams compete for limited resources."
-},
-
-{
-type:"accountability",
-title:"Repeated Failure",
-text:"One contributor continues missing expectations."
-},
-
-{
-type:"results",
-title:"Goal Drift",
-text:"Personal objectives begin replacing team goals."
-},
-
-{
-type:"trust",
-title:"Feedback Round",
-text:"Honest feedback is requested."
-},
-
-{
-type:"commitment",
-title:"Transformation Change",
-text:"A difficult change initiative is proposed."
-},
-
-{
-type:"results",
-title:"Final Review",
-text:"Project outcomes are reviewed by leadership."
+text:"Avoid ownership",
+score:-1
+}
+]
 }
 
 ];
-
 function populateFunctions(){
 
 const dropdown =
@@ -247,28 +228,39 @@ current.text;
 document
 .getElementById("tracker")
 .innerText =
-(currentQuestion + 1);
+currentQuestion + 1;
 
-updateStoryTiles();
+const optionsContainer =
+document.getElementById("options");
+
+optionsContainer.innerHTML = "";
+
+current.options.forEach(option=>{
+
+const button =
+document.createElement("button");
+
+button.className =
+"option-btn";
+
+button.innerText =
+option.text;
+
+button.onclick = () =>
+answer(option.score);
+
+optionsContainer.appendChild(button);
+
+});
 
 }
 
-function answer(choice){
+function answer(score){
 
 const category =
-questions[currentQuestion]
-.type;
+questions[currentQuestion].type;
 
-if(choice==="positive"){
-
-scores[category]+=2;
-
-}
-else if(choice==="neutral"){
-
-scores[category]+=1;
-
-}
+scores[category] += score;
 
 currentQuestion++;
 
@@ -286,18 +278,31 @@ loadQuestion();
 
 function showResults(){
 
-const report =
+document
+.getElementById("simulation")
+.innerHTML = `
 
-"Trust: " + scores.trust + "\n" +
-"Conflict: " + scores.conflict + "\n" +
-"Commitment: " + scores.commitment + "\n" +
-"Accountability: " + scores.accountability + "\n" +
-"Results: " + scores.results;
+<h2 class="text-4xl font-bold mb-6">
+Leadership Assessment Report
+</h2>
 
-alert(report);
+<div class="space-y-4">
+
+<p>Trust Score: ${scores.trust}</p>
+
+<p>Conflict Score: ${scores.conflict}</p>
+
+<p>Commitment Score: ${scores.commitment}</p>
+
+<p>Accountability Score: ${scores.accountability}</p>
+
+<p>Results Score: ${scores.results}</p>
+
+</div>
+
+`;
 
 }
-
 function updateStoryTiles(){
 
 const tiles =
