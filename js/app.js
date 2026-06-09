@@ -5,50 +5,48 @@ let storyData = [];
 let answers = [];
 
 let scores = {
-
 trust:0,
 conflict:0,
 commitment:0,
 accountability:0,
 results:0
-
 };
 
-
 /* -------------------------
-   Job Functions
---------------------------*/
+Job Functions
+-------------------------- */
 
 function populateFunctions(){
 
+```
 const dropdown =
 document.getElementById("jobFunction");
 
 dropdown.innerHTML =
 '<option value="">Select Job Function</option>';
 
-Object.keys(jobFunctions)
-.forEach(func => {
+Object.keys(jobFunctions).forEach(func => {
 
-const option =
-document.createElement("option");
+    const option =
+    document.createElement("option");
 
-option.value = func;
-option.textContent = func;
+    option.value = func;
+    option.textContent = func;
 
-dropdown.appendChild(option);
+    dropdown.appendChild(option);
 
 });
+```
 
 }
 
-
 /* -------------------------
-   Job Families
---------------------------*/
+Job Families
+-------------------------- */
 
 function populateFamilies(){
 
+```
 const func =
 document.getElementById("jobFunction").value;
 
@@ -60,28 +58,28 @@ familyDropdown.innerHTML =
 
 if(!func) return;
 
-jobFunctions[func]
-.forEach(family => {
+jobFunctions[func].forEach(family => {
 
-const option =
-document.createElement("option");
+    const option =
+    document.createElement("option");
 
-option.value = family;
-option.textContent = family;
+    option.value = family;
+    option.textContent = family;
 
-familyDropdown.appendChild(option);
+    familyDropdown.appendChild(option);
 
 });
+```
 
 }
 
-
 /* -------------------------
-   Start Assessment
---------------------------*/
+Start Assessment
+-------------------------- */
 
 function startSimulation(){
 
+```
 const name =
 document.getElementById("name")
 .value
@@ -89,11 +87,11 @@ document.getElementById("name")
 
 if(name.length < 2){
 
-alert(
-"Please enter at least your first name."
-);
+    alert(
+    "Please enter at least your first name."
+    );
 
-return;
+    return;
 
 }
 
@@ -103,11 +101,11 @@ document.getElementById("jobFunction")
 
 if(!jobFunction){
 
-alert(
-"Please select a Job Function."
-);
+    alert(
+    "Please select a Job Function."
+    );
 
-return;
+    return;
 
 }
 
@@ -118,6 +116,14 @@ currentQuestion = 0;
 
 answers = [];
 
+scores = {
+    trust:0,
+    conflict:0,
+    commitment:0,
+    accountability:0,
+    results:0
+};
+
 document
 .getElementById("landingPage")
 .style.display = "none";
@@ -127,16 +133,17 @@ document
 .classList.remove("hidden");
 
 loadQuestion();
+```
 
 }
 
-
 /* -------------------------
-   Load Question
---------------------------*/
+Load Question
+-------------------------- */
 
 function loadQuestion(){
 
+```
 const scenario =
 storyData[currentQuestion];
 
@@ -180,214 +187,127 @@ document
 .getElementById("options")
 .innerHTML = `
 
-<button
-class="option-btn"
-onclick="selectOption(3)">
-
+<button class="option-btn" onclick="selectOption(3,this)">
 Strongly Effective Response
-
 </button>
 
-<button
-class="option-btn"
-onclick="selectOption(2)">
-
+<button class="option-btn" onclick="selectOption(2,this)">
 Moderately Effective Response
-
 </button>
 
-<button
-class="option-btn"
-onclick="selectOption(1)">
-
+<button class="option-btn" onclick="selectOption(1,this)">
 Ineffective Response
-
 </button>
 
 `;
+```
 
 }
 
-
 /* -------------------------
-   Select Option
---------------------------*/
+Select Option
+-------------------------- */
 
-function selectOption(score){
+function selectOption(score, button){
 
+```
 answers[currentQuestion] = score;
-
-const dimension =
-storyData[currentQuestion]
-.dimension;
-
-scores[dimension] += score;
 
 const buttons =
 document.querySelectorAll(
 "#options button"
 );
 
-buttons.forEach(btn=>{
-
-btn.style.background =
-"#1e293b";
-
-});
-
-event.target.style.background =
-"#2563eb";
-
-}
-
 buttons.forEach(btn => {
 
-btn.style.background =
-"#1e293b";
+    btn.style.background =
+    "#1e293b";
 
 });
 
-event.target.style.background =
+button.style.background =
 "#2563eb";
+```
 
 }
 
-
 /* -------------------------
-   Next Question
---------------------------*/
+Next Question
+-------------------------- */
 
 function nextQuestion(){
 
+```
 if(
 answers[currentQuestion]
 === undefined
 ){
 
-alert(
-"Please select an option before continuing."
-);
+    alert(
+    "Please select an option before continuing."
+    );
 
-return;
+    return;
 
 }
 
+const dimension =
+storyData[currentQuestion]
+.dimension;
+
+scores[dimension] +=
+answers[currentQuestion];
+
 if(
-currentQuestion
-<
+currentQuestion <
 storyData.length - 1
 ){
 
-currentQuestion++;
+    currentQuestion++;
 
-loadQuestion();
+    loadQuestion();
 
 }
 else{
 
-finishAssessment();
+    finishAssessment();
 
 }
+```
 
 }
-
 
 /* -------------------------
-   Previous Question
---------------------------*/
+Previous Question
+-------------------------- */
 
 function previousQuestion(){
 
+```
 if(currentQuestion > 0){
 
-currentQuestion--;
+    currentQuestion--;
 
-loadQuestion();
-
-}
+    loadQuestion();
 
 }
+```
 
+}
 
 /* -------------------------
-   Finish Assessment
---------------------------*/
+Finish Assessment
+-------------------------- */
 
 function finishAssessment(){
 
-const trust =
-scores.trust;
-
-const conflict =
-scores.conflict;
-
-const commitment =
-scores.commitment;
-
-const accountability =
-scores.accountability;
-
-const results =
-scores.results;
-
+```
 const total =
-trust +
-conflict +
-commitment +
-accountability +
-results;
-
-const percentage =
-Math.round(
-(total/45)*100
-);
-
-let profile;
-
-if(percentage >= 85){
-
-profile =
-"High Performing Team Builder";
-
-}
-else if(percentage >= 70){
-
-profile =
-"Collaborative Leader";
-
-}
-else if(percentage >= 50){
-
-profile =
-"Developing Team Leader";
-
-}
-else{
-
-profile =
-"Team Dysfunction Risk";
-
-}
-
-alert(
-
-"Assessment Complete\n\n"+
-
-"Trust: " + trust + "\n"+
-"Conflict: " + conflict + "\n"+
-"Commitment: " + commitment + "\n"+
-"Accountability: " + accountability + "\n"+
-"Results: " + results + "\n\n"+
-
-"Team Health: " +
-percentage + "%\n\n"+
-
-"Profile: " +
-profile
-
-);
-
-}
+scores.trust +
+scores.conflict +
+scores.commitment +
+scores.accountability +
+scores.results;
 
 const maxScore =
 storyData.length * 3;
@@ -398,27 +318,71 @@ Math.round(
 * 100
 );
 
+let profile;
+
+if(percentage >= 85){
+
+    profile =
+    "High Performing Team Builder";
+
+}
+else if(percentage >= 70){
+
+    profile =
+    "Collaborative Leader";
+
+}
+else if(percentage >= 50){
+
+    profile =
+    "Developing Team Leader";
+
+}
+else{
+
+    profile =
+    "Team Dysfunction Risk";
+
+}
+
 alert(
 
 "Assessment Complete\n\n" +
 
-"Team Health Score: " +
+"Trust: " +
+scores.trust + "\n" +
 
-percentage +
+"Conflict: " +
+scores.conflict + "\n" +
 
-"%"
+"Commitment: " +
+scores.commitment + "\n" +
+
+"Accountability: " +
+scores.accountability + "\n" +
+
+"Results: " +
+scores.results + "\n\n" +
+
+"Team Health: " +
+percentage + "%\n\n" +
+
+"Profile: " +
+profile
 
 );
+```
 
 }
 
-
 /* -------------------------
-   Page Load
---------------------------*/
+Page Load
+-------------------------- */
 
 window.onload = function(){
 
+```
 populateFunctions();
+```
 
 };
