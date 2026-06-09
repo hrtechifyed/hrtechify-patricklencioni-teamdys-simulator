@@ -4,6 +4,16 @@ let storyData = [];
 
 let answers = [];
 
+let scores = {
+
+trust:0,
+conflict:0,
+commitment:0,
+accountability:0,
+results:0
+
+};
+
 
 /* -------------------------
    Job Functions
