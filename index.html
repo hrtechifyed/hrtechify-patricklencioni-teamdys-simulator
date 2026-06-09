@@ -3,12 +3,7 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>HRTechify Team Simulator</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
 
 <link rel="stylesheet" href="css/style.css">
 
@@ -16,66 +11,21 @@
 
 <body>
 
-<div class="max-w-6xl mx-auto p-6">
+<div class="container">
 
-<!-- HEADER -->
+<h1>HRTechify Team Simulator</h1>
 
-<div class="text-center mb-8">
+<div id="landingPage" class="card">
 
-<h1 class="text-5xl font-bold">
-HRTechify Team Simulator
-</h1>
-
-<p class="text-slate-300 mt-3">
-Leadership & Team Effectiveness Assessment
-</p>
-
-</div>
-
-<!-- LANDING PAGE -->
-
-<div id="landingPage">
-
-<div class="hero-card p-4 mb-8 max-w-5xl mx-auto">
-
-<img
-id="carousel"
-class="carousel-image"
-src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200"
-alt="Leadership Team">
-
-</div>
-
-<div class="hero-card p-8 max-w-4xl mx-auto">
-
-<h2 class="text-2xl font-bold mb-6">
-Participant Information
-</h2>
-
-<label class="block mb-2 font-semibold">
-First Name *
-</label>
+<h2>Participant Information</h2>
 
 <input
 id="name"
-name="name"
-autocomplete="given-name"
-placeholder="Enter First Name"
-class="border p-3 rounded w-full mb-2 text-black">
-
-<p class="text-sm text-slate-300 mb-4">
-First name is required. Last name is optional.
-</p>
-
-<label class="block mb-2 font-semibold">
-Job Function
-</label>
+placeholder="Enter First Name">
 
 <select
 id="jobFunction"
-name="jobFunction"
-onchange="populateFamilies()"
-class="border p-3 rounded w-full mb-4 text-black">
+onchange="populateFamilies()">
 
 <option value="">
 Select Job Function
@@ -83,14 +33,7 @@ Select Job Function
 
 </select>
 
-<label class="block mb-2 font-semibold">
-Job Family
-</label>
-
-<select
-id="jobFamily"
-name="jobFamily"
-class="border p-3 rounded w-full text-black">
+<select id="jobFamily">
 
 <option value="">
 Select Job Family
@@ -99,8 +42,8 @@ Select Job Family
 </select>
 
 <button
-onclick="startSimulation()"
-class="bg-blue-600 text-white px-6 py-3 rounded-lg mt-6">
+class="primary"
+onclick="startSimulation()">
 
 Begin Assessment
 
@@ -108,71 +51,23 @@ Begin Assessment
 
 </div>
 
-</div>
-
-<!-- SIMULATION -->
-
 <div
 id="simulation"
-class="hidden hero-card p-10 mt-6">
+class="card hidden">
 
-<div class="mb-6">
+<h2 id="questionTitle"></h2>
 
-<div class="flex justify-between">
+<p id="questionText"></p>
 
-<span id="questionCounter">
-Question 1 of 15
-</span>
+<div id="options"></div>
 
-<span id="progressText">
-0%
-</span>
-
-</div>
-
-<div class="w-full bg-slate-700 rounded-full h-3 mt-2">
-
-<div
-id="progressBar"
-class="bg-blue-500 h-3 rounded-full"
-style="width:0%">
-</div>
-
-</div>
-
-</div>
-
-<h2
-id="questionTitle"
-class="text-3xl font-bold mb-4">
-</h2>
-
-<p
-id="questionText"
-class="text-xl mb-8">
-</p>
-
-<div
-id="options"
-class="grid gap-4">
-</div>
-
-<div
-class="flex justify-between mt-8">
-
-<button
-id="backBtn"
-onclick="previousQuestion()"
-class="bg-slate-700 px-6 py-3 rounded">
-
+<button onclick="previousQuestion()">
 Back
-
 </button>
 
 <button
-id="nextBtn"
-onclick="nextQuestion()"
-class="bg-blue-600 px-6 py-3 rounded">
+class="primary"
+onclick="nextQuestion()">
 
 Next
 
@@ -182,18 +77,9 @@ Next
 
 </div>
 
-</div>
-
-<footer
-class="fixed bottom-0 left-0 right-0 bg-black text-white text-center p-3">
-
-HRTechify Team Simulator
-
-</footer>
-
 <script src="data/job-functions.js"></script>
-<script src="js/story-engine.js"></script>
 <script src="js/app.js"></script>
 
 </body>
+
 </html>
