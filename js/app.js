@@ -215,13 +215,30 @@ Ineffective Response
 
 function selectOption(score){
 
-answers[currentQuestion] =
-score;
+answers[currentQuestion] = score;
+
+const dimension =
+storyData[currentQuestion]
+.dimension;
+
+scores[dimension] += score;
 
 const buttons =
 document.querySelectorAll(
 "#options button"
 );
+
+buttons.forEach(btn=>{
+
+btn.style.background =
+"#1e293b";
+
+});
+
+event.target.style.background =
+"#2563eb";
+
+}
 
 buttons.forEach(btn => {
 
@@ -298,13 +315,79 @@ loadQuestion();
 
 function finishAssessment(){
 
-let total = 0;
+const trust =
+scores.trust;
 
-answers.forEach(score => {
+const conflict =
+scores.conflict;
 
-total += score;
+const commitment =
+scores.commitment;
 
-});
+const accountability =
+scores.accountability;
+
+const results =
+scores.results;
+
+const total =
+trust +
+conflict +
+commitment +
+accountability +
+results;
+
+const percentage =
+Math.round(
+(total/45)*100
+);
+
+let profile;
+
+if(percentage >= 85){
+
+profile =
+"High Performing Team Builder";
+
+}
+else if(percentage >= 70){
+
+profile =
+"Collaborative Leader";
+
+}
+else if(percentage >= 50){
+
+profile =
+"Developing Team Leader";
+
+}
+else{
+
+profile =
+"Team Dysfunction Risk";
+
+}
+
+alert(
+
+"Assessment Complete\n\n"+
+
+"Trust: " + trust + "\n"+
+"Conflict: " + conflict + "\n"+
+"Commitment: " + commitment + "\n"+
+"Accountability: " + accountability + "\n"+
+"Results: " + results + "\n\n"+
+
+"Team Health: " +
+percentage + "%\n\n"+
+
+"Profile: " +
+profile
+
+);
+
+}
 
 const maxScore =
 storyData.length * 3;
