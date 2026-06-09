@@ -3,6 +3,9 @@
 
 <head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>HRTechify Team Simulator</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -14,6 +17,8 @@
 <body>
 
 <div class="max-w-6xl mx-auto p-6">
+
+<!-- HEADER -->
 
 <div class="text-center mb-8">
 
@@ -27,6 +32,8 @@ Leadership & Team Effectiveness Assessment
 
 </div>
 
+<!-- LANDING PAGE -->
+
 <div id="landingPage">
 
 <div class="hero-card p-4 mb-8 max-w-5xl mx-auto">
@@ -34,7 +41,8 @@ Leadership & Team Effectiveness Assessment
 <img
 id="carousel"
 class="carousel-image"
-src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200">
+src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200"
+alt="Leadership Team">
 
 </div>
 
@@ -45,20 +53,27 @@ Participant Information
 </h2>
 
 <label class="block mb-2 font-semibold">
-Full Name *
+First Name *
 </label>
 
 <input
 id="name"
-placeholder="Example: John Smith"
-class="border p-3 rounded w-full mb-4 text-black">
+name="name"
+autocomplete="given-name"
+placeholder="Enter First Name"
+class="border p-3 rounded w-full mb-2 text-black">
 
 <p class="text-sm text-slate-300 mb-4">
-Please enter first name and last name.
+First name is required. Last name is optional.
 </p>
+
+<label class="block mb-2 font-semibold">
+Job Function
+</label>
 
 <select
 id="jobFunction"
+name="jobFunction"
 onchange="populateFamilies()"
 class="border p-3 rounded w-full mb-4 text-black">
 
@@ -68,8 +83,13 @@ Select Job Function
 
 </select>
 
+<label class="block mb-2 font-semibold">
+Job Family
+</label>
+
 <select
 id="jobFamily"
+name="jobFamily"
 class="border p-3 rounded w-full text-black">
 
 <option value="">
@@ -90,6 +110,7 @@ Begin Assessment
 
 </div>
 
+<!-- SIMULATION -->
 
 <div
 id="simulation"
@@ -104,7 +125,7 @@ Question 1 of 15
 </span>
 
 <span id="progressText">
-7%
+0%
 </span>
 
 </div>
@@ -123,7 +144,7 @@ style="width:0%">
 
 <h2
 id="questionTitle"
-class="text-4xl font-bold mb-4">
+class="text-3xl font-bold mb-4">
 </h2>
 
 <p
@@ -161,16 +182,18 @@ Next
 
 </div>
 
+</div>
+
 <footer
 class="fixed bottom-0 left-0 right-0 bg-black text-white text-center p-3">
 
-Scenario <span id="tracker">0</span>/15
+HRTechify Team Simulator
 
 </footer>
 
 <script src="data/job-functions.js"></script>
 <script src="js/story-engine.js"></script>
 <script src="js/app.js"></script>
-  
+
 </body>
 </html>
